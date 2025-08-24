@@ -1,0 +1,38 @@
+﻿@page "/"
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="d-flex flex-column align-items-center justify-content-center vh-100">
+    @if (_isLoading)
+    {
+        <MudProgressCircular Indeterminate="true" />
+    }
+    else if (_userExists)
+    {
+        <div>
+            <MudText Typo="Typo.h5">Login</MudText>
+            <MudTextField Label="Password" @bind-Value="_password" InputType="InputType.Password" />
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Login">
+                Login
+            </MudButton>
+        </div>
+
+    }
+    else
+    {
+        <div>
+            <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-3">Welcomee to Dezhban Password Manager</MudText>
+            <MudTextField Label="Password" @bind-Value="_password" InputType="InputType.Password" />
+            <MudText Typo="Typo.subtitle2" Align="Align.Center" Color="Color.Secondary" Class="mb-3">This password will be set as your login password.</MudText>
+            <MudButton Variant="Variant.Filled" Class="mx-auto d-block" Color="Color.Primary" OnClick="CreateUser">
+                Create User
+            </MudButton>
+        </div>
+
+        @if (!string.IsNullOrEmpty(_errorMessage))
+        {
+            <MudPaper Class="mt-5 d-flex bg-transparent gap-1"> 
+                <MudIcon Icon="@Icons.Material.Filled.Error" Color="Color.Error" />
+            <MudText Typo="Typo.subtitle2" Align="Align.Center" Color="Color.Error">@_errorMessage</MudText>
+        </MudPaper>
+        }
+    }
+</MudContainer>

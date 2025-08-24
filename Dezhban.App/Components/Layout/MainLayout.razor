@@ -1,0 +1,77 @@
+﻿@inherits LayoutComponentBase
+@using MudBlazor
+@using MudBlazor.Utilities
+
+<MudRTLProvider RightToLeft="false">
+    <MudThemeProvider Theme="@_theme" @bind-IsDarkMode="@_isDarkMode" />
+    <MudDialogProvider />
+    <MudSnackbarProvider />
+    @Body
+</MudRTLProvider>
+
+@code {
+    private bool _isDarkMode = true;
+
+    private MudTheme _theme = new MudTheme()
+    {
+        PaletteLight = new PaletteLight()
+        {
+            Primary = Colors.Blue.Default,        // Main blue
+            Secondary = Colors.LightBlue.Accent3, // Lighter blue accent
+            Tertiary = Colors.Indigo.Darken2,     // Deeper shade for contrast
+            Background = Colors.Shades.White,     // Page background
+            Surface = Colors.Gray.Lighten4,       // Card/background surface
+            AppbarBackground = Colors.Blue.Darken4, // Dark navy app bar
+            AppbarText = Colors.Shades.White,
+            DrawerBackground = Colors.Gray.Darken4,
+            DrawerText = Colors.Shades.White,
+            DrawerIcon = Colors.Blue.Lighten3,
+            TextPrimary = Colors.Gray.Darken4,
+            TextSecondary = Colors.Gray.Darken2,
+            ActionDefault = Colors.Blue.Default,
+            ActionDisabled = Colors.Gray.Lighten1,
+            ActionDisabledBackground = Colors.Gray.Lighten3,
+        },
+        PaletteDark = new PaletteDark()
+        {
+            Primary = new MudColor("#F2613F"),              // Strong orange/red highlight
+            Secondary = new MudColor("#9B3922"),            // Deep brown accent
+            Background = new MudColor("#0C0C0C"),           // Base dark background
+            Surface = new MudColor("#481E14"),              // Elevated surfaces
+            AppbarBackground = new MudColor("#481E14"),     // Appbar same as surface
+            AppbarText = new MudColor("#FFFFFF"),           // White text
+            DrawerBackground = new MudColor("#0C0C0C"),     // Same as background
+            DrawerText = new MudColor("#FFFFFF"),           // White drawer text
+            DrawerIcon = new MudColor("#F2613F"),           // Accent for icons
+
+            TextPrimary = new MudColor("#FFFFFF"),          // Main text
+            TextSecondary = new MudColor("#CCCCCC"),        // Muted gray
+
+            ActionDefault = new MudColor("#F2613F"),        // Default actions
+            ActionDisabled = new MudColor("#9B3922"),       // Disabled actions
+            ActionDisabledBackground = new MudColor("#481E14"),
+
+            Divider = new MudColor("#9B3922"),
+            DividerLight = new MudColor("#481E14"),
+
+            TableLines = new MudColor("#481E14"),
+            LinesDefault = new MudColor("#9B3922"),
+            LinesInputs = new MudColor("#F2613F"),
+
+            Success = new MudColor("#9B3922"),
+            Info = new MudColor("#F2613F"),
+            Warning = new MudColor("#F2613F"),
+            Error = new MudColor("#F70E27"),
+        },
+
+
+        Typography = new Typography()
+        {
+            Default = new DefaultTypography()
+            {
+                FontFamily = new[] { "Lato", "Arial", "sans-serif" }
+            },
+        }
+    };
+
+}
