@@ -4,5 +4,6 @@
     {
         Task<bool> IsInitializedAsync();
         Task InitializedAsync(string password);
+        Task<bool> LoginAsync(string password);
     }
 }

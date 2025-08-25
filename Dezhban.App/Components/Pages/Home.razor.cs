@@ -1,11 +1,13 @@
 ﻿using Dezhban.ApplicationServices.Services.Users;
 using Microsoft.AspNetCore.Components;
+using System.Threading.Tasks;
 
 namespace Dezhban.App.Components.Pages
 {
     public partial class Home
     {
-        [Inject] public IUserService _userService { get; set; } = default;
+        [Inject] public IUserService _userService { get; set; } = default!;
+        [Inject] public NavigationManager _navigationManager { get; set; } = default!;
 
         private bool _userExists;
         private bool _isLoading = true;
@@ -33,9 +35,17 @@ namespace Dezhban.App.Components.Pages
             StateHasChanged();
         }
 
-        private void Login()
+        private async Task Login()
         {
-            // Implement login logic (check username/password)
+            var loginResult = await _userService.LoginAsync(_password);
+            if(loginResult)
+            {
+                _navigationManager.NavigateTo("/passwords");
+            }
+            else
+            {
+                _errorMessage = "Login Failed.";
+            }
         }
     }
 }

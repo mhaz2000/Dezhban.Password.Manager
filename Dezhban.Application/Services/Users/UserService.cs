@@ -33,5 +33,19 @@ namespace Dezhban.ApplicationServices.Services.Users
 
             return user?.IsInitialized ?? false;
         }
+
+        public async Task<bool> LoginAsync(string password)
+        {
+            var passwordHasher = new PasswordHasher<User>();
+
+            var user = await _repository.GetAsync(_ => true);
+            if (user == null)
+                return false; // No user exists
+
+            var result = passwordHasher.VerifyHashedPassword(user, user.Password, password);
+
+            return result == PasswordVerificationResult.Success ||
+                   result == PasswordVerificationResult.SuccessRehashNeeded;
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace Dezhban.ApplicationServices
             services.AddInfrastructure(dbPath);
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPasswordService, PasswordService>();
 
             // Register application services here if needed in the future
             return services;

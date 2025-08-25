@@ -7,13 +7,22 @@
     }
     else if (_userExists)
     {
-        <div>
-            <MudText Typo="Typo.h5">Login</MudText>
-            <MudTextField Label="Password" @bind-Value="_password" InputType="InputType.Password" />
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Login">
+        <MudPaper Class="bg-transparent w-100 mx-2">
+            <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-3">Login</MudText>
+
+            <MudTextField Label="Password" @bind-Value="_password" InputType="InputType.Password" Class="mb-3" FullWidth />
+            <MudButton Variant="Variant.Filled" Class="mx-auto d-block" Color="Color.Primary" OnClick="Login">
                 Login
             </MudButton>
-        </div>
+        </MudPaper>
+
+        @if (!string.IsNullOrEmpty(_errorMessage))
+        {
+            <MudPaper Class="mt-5 d-flex bg-transparent gap-1">
+                <MudIcon Icon="@Icons.Material.Filled.Error" Color="Color.Error" />
+                <MudText Typo="Typo.subtitle2" Align="Align.Center" Color="Color.Error">@_errorMessage</MudText>
+            </MudPaper>
+        }
 
     }
     else
@@ -31,8 +40,8 @@
         {
             <MudPaper Class="mt-5 d-flex bg-transparent gap-1"> 
                 <MudIcon Icon="@Icons.Material.Filled.Error" Color="Color.Error" />
-            <MudText Typo="Typo.subtitle2" Align="Align.Center" Color="Color.Error">@_errorMessage</MudText>
-        </MudPaper>
+                <MudText Typo="Typo.subtitle2" Align="Align.Center" Color="Color.Error">@_errorMessage</MudText>
+            </MudPaper>
         }
     }
 </MudContainer>

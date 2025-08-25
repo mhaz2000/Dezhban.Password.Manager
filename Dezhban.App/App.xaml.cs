@@ -13,10 +13,14 @@
         {
             var window = base.CreateWindow(activationState);
 
+
 #if WINDOWS
 
-        window.Width = 400;
-        window.Height = 600;
+        window.Width = 800;
+        window.Height = 500;
+        window.MinimumWidth = 800;
+        window.MinimumHeight = 400;
+
 
             var display = DeviceDisplay.Current.MainDisplayInfo;
             var screenWidth = display.Width / display.Density;
