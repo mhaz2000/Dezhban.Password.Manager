@@ -20,7 +20,7 @@ namespace Dezhban.ApplicationServices.Services.Users
             password.Title = model.Title;
             password.Password = model.Password;
             password.Username = model.Username;
-            password.AdditionalData = model.AdditionalData;
+            password.AdditionalData = model.AdditionalData ?? "";
 
             await _repository.UpdateAsync(password);
         }

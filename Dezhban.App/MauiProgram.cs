@@ -33,6 +33,7 @@ namespace Dezhban.App
     		builder.Logging.AddDebug();
 #endif
 
+
             var app = builder.Build();
 
             app.Services.EnsureDatabaseMigrated();
