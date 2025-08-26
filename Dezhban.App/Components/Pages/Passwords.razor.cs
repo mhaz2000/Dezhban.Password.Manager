@@ -1,9 +1,12 @@
-﻿using Dezhban.App.Components.UI.Passwords;
+﻿using CommunityToolkit.Maui.Storage;
+using Dezhban.App.Components.UI.Passwords;
 using Dezhban.ApplicationServices.Services.Users;
 using Dezhban.Core.Entities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
+using System.Text;
+using System.Threading.Tasks;
 using Color = MudBlazor.Color;
 
 namespace Dezhban.App.Components.Pages
@@ -13,6 +16,7 @@ namespace Dezhban.App.Components.Pages
         [Inject] public IPasswordService _passwordService { get; set; } = default!;
         [Inject] public IDialogService _dialogService { get; set; } = default!;
         [Inject] private IJSRuntime JS { get; set; } = default!;
+        [Inject] private IFileSaver saveFileService { get; set; } = default!;
 
         private string _searchTerm = "";
         private List<PasswordModel> _passwords = new();
@@ -64,16 +68,29 @@ namespace Dezhban.App.Components.Pages
 
             if (!result.Canceled)
             {
-                DeletePassword(model);
+                await DeletePassword(model);
             }
         }
 
-        private void DeletePassword(PasswordModel model)
+        private async Task DeletePassword(PasswordModel model)
         {
             _passwords.Remove(model);
+            await _passwordService.DeletePasswordAsync(model.Id);
             // TODO: call repository/service to remove from DB
         }
 
+        private async Task OpenAdditionalDataDialog(PasswordModel password)
+        {
+            var parameters = new DialogParameters<AdditionalDataDialog>
+            {
+                { x=> x.ContentText, $"{password.AdditionalData}"},
+            };
+
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true };
+
+            await _dialogService.ShowAsync<AdditionalDataDialog>("Additional data", parameters, options);
+
+        }
         private async Task OpenUpdateDialog(PasswordModel existingPassword)
         {
             var parameters = new DialogParameters { ["Model"] = existingPassword };
@@ -90,6 +107,7 @@ namespace Dezhban.App.Components.Pages
                     _passwords[index] = updatedPassword;
 
                 // TODO: update DB
+                await _passwordService.UpdatePasswordAsync(updatedPassword);
                 StateHasChanged();
             }
         }
@@ -102,10 +120,16 @@ namespace Dezhban.App.Components.Pages
 
             if (!result.Canceled && result.Data is PasswordModel model)
             {
-                //await _passwordService.AddPasswordAsync(model);
+                await _passwordService.AddPasswordAsync(model);
                 _passwords.Add(model);
                 StateHasChanged();
             }
+        }
+
+        private async Task BackupPasswords()
+        {
+            MemoryStream stream = await _passwordService.GetPasswordsExcelBackupFileAsync();
+            await saveFileService.SaveAsync("passwords.xlsx", stream);
         }
 
         private async Task CopyToClipboard(string text)

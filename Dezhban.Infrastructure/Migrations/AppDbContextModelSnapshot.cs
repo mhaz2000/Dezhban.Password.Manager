@@ -41,7 +41,7 @@ namespace Dezhban.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Passwords");
+                    b.ToTable("Passwords", (string)null);
                 });
 
             modelBuilder.Entity("Dezhban.Core.Entities.User", b =>
@@ -59,7 +59,7 @@ namespace Dezhban.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 #pragma warning restore 612, 618
         }

@@ -24,7 +24,7 @@ namespace Dezhban.App.Components.UI.Passwords
                 Title = Model.Title,
                 Username = Model.Username,
                 Password = Model.Password,
-                AdditionalData = new Dictionary<string, string>(Model.AdditionalData ?? new())
+                AdditionalData = Model.AdditionalData
             };
         }
 

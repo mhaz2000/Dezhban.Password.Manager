@@ -17,7 +17,7 @@
 #if WINDOWS
 
         window.Width = 800;
-        window.Height = 500;
+        window.Height = 550;
         window.MinimumWidth = 800;
         window.MinimumHeight = 400;
 
